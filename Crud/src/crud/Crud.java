@@ -10,8 +10,9 @@ public class Crud
     {
         int c=0;
         boolean bool = true;
+        String choices = "1]create\n2]insert\n3]update\n4]delete\n5]read\n6]man_Query\n7]list of tables\n8]drop table";
         Scanner scan = new Scanner(System.in);
-        System.out.print("1]create\n2]insert\n3]update\n4]delete\n5]read");
+        System.out.println(choices);
         c=scan.nextInt();
         while(bool)
         {
@@ -65,6 +66,44 @@ public class Crud
                         System.out.println(rs.getInt(1)+rs.getString(2));
                     }
                 break;
+                    
+                case 6:
+                    System.out.print("Enter the SQL Query manually : ");
+                    scan.useDelimiter("\n");
+                    String man_Query = scan.next();
+                    System.out.println(man_Query);
+                    boolean type = Functions.queryType(man_Query);
+                    ResultSet rs1;
+                    int message4=0;
+                    if(type)
+                    {
+                         rs1 = Functions.select_Query(man_Query);
+                         while(rs1.next())
+                         {
+                            System.out.println(rs1.getInt(1)+rs1.getString(2));
+                         }
+                    }
+                    else
+                    {
+                         message = Functions.nonSelect_Query(man_Query);
+                         System.out.println(message4);
+                    }     
+                break;
+                    
+                case 7:
+                    ResultSet tables = Functions.select_Query("show tables");
+                    while(tables.next())
+                    {
+                            System.out.println(tables.getString(1));
+                    }
+                break;
+                    
+                case 8:
+                    System.out.print("Enter the name of the table : ");
+                    String table=scan.next();
+                    int message5 = Functions.nonSelect_Query("drop table "+table);
+                    System.out.println("message : "+message5);
+                    break;
             }
             
             System.out.print("Do you want to continue?[1/0] : ");
@@ -74,7 +113,7 @@ public class Crud
             
             if(bool)
             {
-                System.out.print("1]create\n2]insert\n3]update\n4]delete\n5]read");
+                System.out.println(choices);
                 c=scan.nextInt();
             }
         }

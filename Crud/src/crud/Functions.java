@@ -53,4 +53,25 @@ public class Functions
         ResultSet rs = pst.executeQuery();
         return rs;
     }
+    
+    public static boolean queryType(String query)throws SQLException
+    {
+        PreparedStatement pst = Functions.connection().prepareStatement(query);
+        boolean type = pst.execute();
+        return type;
+    }
+    
+    public static ResultSet select_Query(String query)throws SQLException
+    {
+        PreparedStatement pst = Functions.connection().prepareStatement(query);
+        ResultSet rs = pst.executeQuery();
+        return rs;
+    }
+    
+    public static int nonSelect_Query(String query)throws SQLException
+    {
+        PreparedStatement pst = Functions.connection().prepareStatement(query);
+        int message = pst.executeUpdate();
+        return message;
+    }
 }
